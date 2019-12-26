@@ -646,29 +646,40 @@ export function createBaseWebpackConfig({
           // by the project that needs it.
           //
           // If more users use `svelte` we'll consider adding it to everyone by default.
-          loader: 'svelte-loader',
-          options: {
-            hydratable: true,
-            // https://github.com/sveltejs/svelte-loader/issues/67
-            onwarn: (warning: any, onwarn: any) => {
-              warning.code === 'css-unused-selector' || onwarn(warning);
-            },
-            preprocess: [
-              {
-                style:
-                  importCwd.silent('svelte-preprocess-sass') &&
-                  (importCwd.silent('svelte-preprocess-sass') as any).sass({
-                    includePaths: sassIncludePaths,
+          use: [
+            {
+              loader: 'svelte-loader',
+              options: {
+                hydratable: true,
+                // https://github.com/sveltejs/svelte-loader/issues/67
+                onwarn: (warning: any, onwarn: any) => {
+                  warning.code === 'css-unused-selector' || onwarn(warning);
+                },
+                preprocess: [
+                  {
+                    style:
+                      importCwd.silent('svelte-preprocess-sass') &&
+                      (importCwd.silent('svelte-preprocess-sass') as any).sass({
+                        includePaths: sassIncludePaths,
+                      }),
+                  },
+                  mdsvex({
+                    extension: '.svx',
                   }),
+                ],
+                dev: isDev,
+                emitCss: target !== 'node',
+                generate: target === 'node' ? 'ssr' : 'dom',
               },
-              mdsvex({
-                extension: '.svx',
-              }),
-            ],
-            dev: isDev,
-            emitCss: target !== 'node',
-            generate: target === 'node' ? 'ssr' : 'dom',
-          },
+            },
+            ...(target === 'node'
+              ? [
+                  {
+                    loader: require.resolve('./svelte-transform-loader'),
+                  },
+                ]
+              : []),
+          ],
         },
 
         ...(useAngular
