@@ -5,6 +5,7 @@ import {
   isInsideGitRepo,
   lintFix,
   npmInstall,
+  gitCommit,
 } from './utils';
 import runPrompt from './runPrompt';
 import generateProject from './generateProject';
@@ -15,6 +16,7 @@ export interface CreateAppOptions {
   templateModel?: TemplateModel;
   install?: boolean;
   lint?: boolean;
+  commit?: boolean;
 }
 
 export default async ({
@@ -22,6 +24,7 @@ export default async ({
   templateModel,
   install = true,
   lint = true,
+  commit = true,
 }: CreateAppOptions) => {
   clearConsole();
 
@@ -54,6 +57,10 @@ export default async ({
 
   if (lint) {
     lintFix(workingDir);
+  }
+
+  if (commit) {
+    gitCommit(workingDir);
   }
 
   return templateModel;

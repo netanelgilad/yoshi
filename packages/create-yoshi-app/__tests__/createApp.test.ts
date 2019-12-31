@@ -35,7 +35,6 @@ test('it should generate a git repo', async () => {
   const gitLog = execa.sync('git', ['show', '-s', '--format=%s'], {
     cwd: tempDir,
   }).stdout;
-
   expect(() => {
     console.log('Checking git status...');
     execa.sync('git status', {
