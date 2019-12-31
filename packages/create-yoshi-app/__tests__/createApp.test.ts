@@ -63,7 +63,7 @@ test('should create a git repo and commit an initial commit by CYA', async () =>
   const projectDir = path.join(tempDir, 'project');
   fs.ensureDirSync(projectDir);
   await createApp({ workingDir: projectDir, install: false, lint: false });
-  const gitLog = execa.sync('git', ['log']).stdout;
+  const gitLog = execa.sync('git', ['show', '-s', '--format=%s']).stdout;
   expect(gitLog).toMatch('Initial commit');
 });
 
