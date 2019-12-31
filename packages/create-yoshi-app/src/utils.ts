@@ -50,15 +50,21 @@ export const lintFix = (dir: string) => {
 };
 
 export const gitInit = (dir: string) => {
-  console.log(`\nRunning ${chalk.magenta('git init')}\n`);
+  const commands = [
+    'git init',
+    'git add .',
+    'git commit -m "Initial commit from Create Yoshi App"',
+  ];
 
-  const { stdout } = execa.sync('git init', {
-    shell: true,
-    cwd: dir,
-    stdio: 'pipe',
+  commands.forEach(command => {
+    console.log(`\nRunning ${chalk.magenta(command)}\n`);
+    const { stdout } = execa.sync(command, {
+      shell: true,
+      cwd: dir,
+      stdio: 'pipe',
+    });
+    console.log(stdout + '\n');
   });
-
-  console.log(stdout + '\n');
 };
 
 export const isInsideGitRepo = (dir: string) => {

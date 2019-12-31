@@ -55,6 +55,18 @@ test('it should not create a git repo if the target directory is contained in a 
   expect(() => fs.statSync(path.join(projectDir, '.git'))).toThrow();
 });
 
+test('should create a git repo and commit an initial commit by CYA', async () => {
+  (runPrompt as jest.Mock).mockReturnValue(minimalTemplateModel());
+  (verifyRegistry as jest.Mock).mockReturnValue(undefined);
+
+  const tempDir = tempy.directory();
+  const projectDir = path.join(tempDir, 'project');
+  fs.ensureDirSync(projectDir);
+  await createApp({ workingDir: projectDir, install: false, lint: false });
+  const gitLog = execa.sync('git', ['log']).stdout;
+  expect(gitLog).toMatch('Initial commit');
+});
+
 test('it uses a template model', async () => {
   const templateModel = minimalTemplateModel();
 
