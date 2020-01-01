@@ -17,19 +17,22 @@ class JestYoshiWatchPlugin {
   getUsageInfo() {
     return {
       key: 'd',
-      prompt: 'run tests in debug mode',
+      prompt: `run tests with ${
+        JestYoshiWatchPlugin.isDebugMode ? 'closed' : 'open'
+      } browser`,
     };
   }
 
   /**
    * Event when choosing item (d) from watch menu
    */
-  run() {
+  async run() {
     if (JestYoshiWatchPlugin.isDebugMode) {
-      return JestYoshiWatchPlugin.setDebugMode(false);
+      JestYoshiWatchPlugin.setDebugMode(false);
     } else {
-      return JestYoshiWatchPlugin.setDebugMode(true);
+      JestYoshiWatchPlugin.setDebugMode(true);
     }
+    return true;
   }
 }
 
