@@ -39,11 +39,14 @@ const supportedGlobalOverrideKeys = [
 
 const globalValidOverrides = pick(jestYoshiConfig, supportedGlobalOverrideKeys);
 
+global.__isDebugMode__ =
+  jestYoshiConfig.puppeteer && jestYoshiConfig.puppeteer.devtools;
+
 const config = {
   watchPlugins: [
     require.resolve('jest-watch-typeahead/filename'),
     require.resolve('jest-watch-typeahead/testname'),
-    __dirname + '/plugins/jest-yoshi-watch.js',
+    __dirname + '/plugins/jest-watch-debug.js',
   ],
   ...globalValidOverrides,
   projects: [

@@ -18,7 +18,7 @@ const { getProcessOnPort } = require('yoshi-helpers/utils');
 const { setupRequireHooks } = require('yoshi-helpers/require-hooks');
 const cdnProxy = require('./cdnProxy');
 const loadJestYoshiConfig = require('yoshi-config/jest');
-const JestYoshiWatchPlugin = require('../plugins/jest-yoshi-watch');
+const JestWatchDebug = require('../plugins/jest-watch-debug');
 // the user's config is loaded outside of a jest runtime and should be transpiled
 // with babel/typescript, this may be run separately for every worker
 setupRequireHooks();
@@ -45,10 +45,7 @@ module.exports = async () => {
       await cdnProxy.start(forwardProxyPort);
     }
 
-    const isDebugMode =
-      JestYoshiWatchPlugin.getDebugMode() ||
-      (jestYoshiConfig.puppeteer && jestYoshiConfig.puppeteer.devtools) ||
-      false;
+    const isDebugMode = JestWatchDebug.getDebugMode();
 
     const puppeteerRuntimeOverrides = {
       devtools: isDebugMode,
