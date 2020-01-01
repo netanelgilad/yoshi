@@ -1,1 +1,3 @@
-jest.setTimeout(15 * 1000);
+const { isDebugMode } = global;
+
+jest.setTimeout(isDebugMode ? 100000 : 15 * 1000);

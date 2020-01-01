@@ -11,14 +11,14 @@ const puppeteer = require('puppeteer');
 const child_process = require('child_process');
 const waitPort = require('wait-port');
 const { servers } = require('yoshi-config');
-const { WS_ENDPOINT_PATH } = require('./constants');
+const { WS_ENDPOINT_PATH, IS_DEBUG_MODE } = require('./constants');
 const { shouldRunE2Es } = require('./utils');
 const { shouldDeployToCDN } = require('yoshi-helpers/queries');
 const { getProcessOnPort } = require('yoshi-helpers/utils');
 const { setupRequireHooks } = require('yoshi-helpers/require-hooks');
 const cdnProxy = require('./cdnProxy');
 const loadJestYoshiConfig = require('yoshi-config/jest');
-
+const JestYoshiWatchPlugin = require('../plugins/jest-yoshi-watch');
 // the user's config is loaded outside of a jest runtime and should be transpiled
 // with babel/typescript, this may be run separately for every worker
 setupRequireHooks();
@@ -34,7 +34,6 @@ const serverLogPrefixer = () => {
 
 module.exports = async () => {
   const jestYoshiConfig = loadJestYoshiConfig();
-
   // a bit hacky, run puppeteer setup only if it's required
   if (await shouldRunE2Es()) {
     // start with a few new lines
@@ -46,9 +45,17 @@ module.exports = async () => {
       await cdnProxy.start(forwardProxyPort);
     }
 
+    const isDebugMode =
+      JestYoshiWatchPlugin.getDebugMode() || jestYoshiConfig.puppeteer.devtools;
+
+    const puppeteerRuntimeOverrides = {
+      devtools: isDebugMode,
+    };
+
     global.BROWSER = await puppeteer.launch({
       // user defined options
       ...jestYoshiConfig.puppeteer,
+      ...puppeteerRuntimeOverrides,
 
       // defaults
       args: [
@@ -71,6 +78,7 @@ module.exports = async () => {
     });
 
     await fs.outputFile(WS_ENDPOINT_PATH, global.BROWSER.wsEndpoint());
+    await fs.outputFile(IS_DEBUG_MODE, isDebugMode);
 
     const webpackDevServerProcess = await getProcessOnPort(
       servers.cdn.port,

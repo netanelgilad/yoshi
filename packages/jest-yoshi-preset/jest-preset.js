@@ -43,6 +43,7 @@ const config = {
   watchPlugins: [
     require.resolve('jest-watch-typeahead/filename'),
     require.resolve('jest-watch-typeahead/testname'),
+    __dirname + '/plugins/jest-yoshi-watch.js',
   ],
   ...globalValidOverrides,
   projects: [
