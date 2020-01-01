@@ -393,7 +393,7 @@ export function createBaseWebpackConfig({
             ...(createEjsTemplates
               ? {
                   runtimeChunk: {
-                    name: `webpack-runtime`,
+                    name: 'webpack-runtime',
                   },
                 }
               : {}),

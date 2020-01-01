@@ -1,12 +1,17 @@
 // See https://docusaurus.io/docs/site-config for all the possible
 // site configuration options.
 
+// TODO - this is a temp hack until teamcity-autorelease-surge would support Base Url.
+const isPr =
+  process.env.VCS_BRANCH_NAME &&
+  !!process.env.VCS_BRANCH_NAME.replace(/\D+/g, '');
+
 const siteConfig = {
   title: 'Yoshi',
   tagline: 'A Toolkit that supports building all kinds of applications in wix',
 
   url: 'https://wix.github.io',
-  baseUrl: '/yoshi',
+  baseUrl: isPr ? '/' : '/yoshi/',
 
   editUrl: 'https://github.com/wix/yoshi/edit/master/docs/',
   repoUrl: 'https://github.com/wix/yoshi',

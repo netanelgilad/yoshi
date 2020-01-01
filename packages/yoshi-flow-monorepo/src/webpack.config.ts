@@ -65,6 +65,8 @@ export function createClientWebpackConfig(
 
   const customSiteAssetsModule = pkg.name === 'thunderbolt-becky';
 
+  const customThunderboltElementsModule = pkg.name === 'thunderbolt-elements';
+
   const clientConfig = createBaseWebpackConfig({
     cwd: pkg.location,
     configName: 'client',
@@ -99,6 +101,10 @@ export function createClientWebpackConfig(
     clientConfig.output!.chunkFilename = isDev
       ? '[name].chunk.js'
       : '[name].[contenthash:8].chunk.min.js';
+  }
+
+  if (customThunderboltElementsModule) {
+    clientConfig.optimization!.runtimeChunk = false;
   }
 
   clientConfig.entry = isSingleEntry(entry) ? { app: entry as string } : entry;
