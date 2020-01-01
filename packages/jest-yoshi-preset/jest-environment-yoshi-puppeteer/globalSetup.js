@@ -46,7 +46,9 @@ module.exports = async () => {
     }
 
     const isDebugMode =
-      JestYoshiWatchPlugin.getDebugMode() || jestYoshiConfig.puppeteer.devtools;
+      JestYoshiWatchPlugin.getDebugMode() ||
+      (jestYoshiConfig.puppeteer && jestYoshiConfig.puppeteer.devtools) ||
+      false;
 
     const puppeteerRuntimeOverrides = {
       devtools: isDebugMode,
