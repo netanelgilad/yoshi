@@ -30,8 +30,8 @@ const getTunnelId = (namespace: string) => {
 export const createSocket = (namespace: string, targetPort: number) => {
   // The consumer project needs to install @wix/suricate-client > 0.0.3
   // by itself because this is a private dependency
-  // eslint-disable-next-line import/no-extraneous-dependencies
-  const { socket } = require('@wix/suricate-client');
+  // eslint-disable-next-line import/no-unresolved
+  const { socket } = require('@wix/suricate-client'); // eslint-disable-line import/no-extraneous-dependencies
 
   return socket({
     target: { port: targetPort },
