@@ -19,7 +19,12 @@ module.exports = class PuppeteerEnvironment extends ParentEnvironment {
     await super.setup();
 
     const browserWSEndpoint = await fs.readFile(WS_ENDPOINT_PATH, 'utf8');
-    const isDebugMode = JSON.parse(await fs.readFile(IS_DEBUG_MODE, 'utf8'));
+
+    let isDebugMode = false;
+
+    try {
+      isDebugMode = JSON.parse(await fs.readFile(IS_DEBUG_MODE, 'utf8'));
+    } catch (e) {}
 
     if (!browserWSEndpoint) {
       throw new Error('wsEndpoint not found');
