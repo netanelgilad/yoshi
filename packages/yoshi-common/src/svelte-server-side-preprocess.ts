@@ -2,7 +2,7 @@ const scriptRegex = /(?<=<script>)((.|\n|\r)*)(?=<\/script>)/;
 
 const replacement = `
 
-  const modulesContext = require('svelte').getContext('modules')
+  const modulesContext = require('svelte').getContext('__modules__')
 
   if (modulesContext) {
     modulesContext(module)
