@@ -48,6 +48,7 @@ import { localIdentName } from './utils/constants';
 import ExportDefaultPlugin from './export-default-plugin';
 import { calculatePublicPath } from './webpack-utils';
 import ManifestPlugin from './manifest-webpack-plugin';
+import SveltePreprocessSSR from './svelte-server-side-preprocess';
 
 const isProduction = checkIsProduction();
 const inTeamCity = checkInTeamCity();
@@ -646,40 +647,30 @@ export function createBaseWebpackConfig({
           // by the project that needs it.
           //
           // If more users use `svelte` we'll consider adding it to everyone by default.
-          use: [
-            {
-              loader: 'svelte-loader',
-              options: {
-                hydratable: true,
-                // https://github.com/sveltejs/svelte-loader/issues/67
-                onwarn: (warning: any, onwarn: any) => {
-                  warning.code === 'css-unused-selector' || onwarn(warning);
-                },
-                preprocess: [
-                  {
-                    style:
-                      importCwd.silent('svelte-preprocess-sass') &&
-                      (importCwd.silent('svelte-preprocess-sass') as any).sass({
-                        includePaths: sassIncludePaths,
-                      }),
-                  },
-                  mdsvex({
-                    extension: '.svx',
-                  }),
-                ],
-                dev: isDev,
-                emitCss: target !== 'node',
-                generate: target === 'node' ? 'ssr' : 'dom',
-              },
+          loader: 'svelte-loader',
+          options: {
+            hydratable: true,
+            // https://github.com/sveltejs/svelte-loader/issues/67
+            onwarn: (warning: any, onwarn: any) => {
+              warning.code === 'css-unused-selector' || onwarn(warning);
             },
-            ...(target === 'node'
-              ? [
-                  {
-                    loader: require.resolve('./svelte-transform-loader'),
-                  },
-                ]
-              : []),
-          ],
+            preprocess: [
+              {
+                style:
+                  importCwd.silent('svelte-preprocess-sass') &&
+                  (importCwd.silent('svelte-preprocess-sass') as any).sass({
+                    includePaths: sassIncludePaths,
+                  }),
+              },
+              mdsvex({
+                extension: '.svx',
+              }),
+              SveltePreprocessSSR(),
+            ],
+            dev: isDev,
+            emitCss: target !== 'node',
+            generate: target === 'node' ? 'ssr' : 'dom',
+          },
         },
 
         ...(useAngular
