@@ -8,6 +8,7 @@ module.exports = {
   globals: {
     browser: false,
     page: false,
+    debugBrowser: false,
   },
   plugins: ['jest'],
   overrides: [
