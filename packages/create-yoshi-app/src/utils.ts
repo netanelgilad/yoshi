@@ -52,7 +52,7 @@ export const lintFix = (dir: string) => {
 export const gitCommit = (dir: string) => {
   const commands = [
     'git add .',
-    'git commit -m "Initial commit from Create Yoshi App"',
+    'git commit -m "Initial commit from Create Yoshi App" --no-verify',
   ];
 
   commands.forEach(command => {
