@@ -1,6 +1,4 @@
 import url from 'url';
-// @ts-ignore - missing types
-import { socket } from '@wix/suricate-client';
 import getGitConfig from 'parse-git-config';
 
 const getPathname = (stringUrl: string) => url.parse(stringUrl).pathname;
@@ -30,6 +28,11 @@ const getTunnelId = (namespace: string) => {
 };
 
 export const createSocket = (namespace: string, targetPort: number) => {
+  // The consumer project needs to install @wix/suricate-client > 0.0.3
+  // by itself because this is a private dependency
+  // eslint-disable-next-line import/no-extraneous-dependencies
+  const { socket } = require('@wix/suricate-client');
+
   return socket({
     target: { port: targetPort },
     url: suricateURL,
