@@ -55,3 +55,18 @@ Several commercial and open source tools can connect to Node's Inspector and the
 - In order to manually tell WebStorm the debugging port, create another configuration, use type 'Attach to Node.js/Chrome'
   ![WebStorm > Attach to Node.js/Chrome](../assets/remotedebug.png)
 - Press debug in order to start the remote debugger configuration then start (without debugging) the 'Node.js' configuration
+
+## Debugging Puppeteer E2E tests
+
+### Debugging in watch mode
+
+- Run `yoshi test --watch` to run in watch mode
+- Press `d` in the watch menu to activate debug mode
+
+### Debugging by default configuration
+
+- Set `devtools: true` in `jest-yoshi.config`
+
+### Adding breakpoints in the browser
+
+- In order to add a breakpoint to browser, add `await debugBrowser();` to your test.
