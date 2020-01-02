@@ -665,7 +665,7 @@ export function createBaseWebpackConfig({
               mdsvex({
                 extension: '.svx',
               }),
-              SveltePreprocessSSR(),
+              ...(target === 'node' ? [SveltePreprocessSSR()] : []),
             ],
             dev: isDev,
             emitCss: target !== 'node',
