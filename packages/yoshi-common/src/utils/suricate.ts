@@ -10,7 +10,7 @@ const WIX_EMAIL_PATTERN = '@wix.com';
 
 const getTunnelId = (namespace: string) => {
   const gitConfig = getGitConfig.sync({ include: true, type: 'global' });
-  const gitEmail = gitConfig.user ? gitConfig.user.email || '' : '';
+  const gitEmail = gitConfig.user ? gitConfig.user.email : '';
   const processUser = process.env.USER;
   let uniqueTunnelId;
   if (gitEmail.endsWith(WIX_EMAIL_PATTERN)) {
