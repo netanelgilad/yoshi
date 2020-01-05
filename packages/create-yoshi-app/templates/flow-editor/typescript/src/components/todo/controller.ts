@@ -1,3 +1,4 @@
+import { FrameworkData } from 'yoshi-flow-editor-runtime';
 // import { saveState, loadState } from './service';
 import v4 from 'uuid/v4';
 
@@ -13,7 +14,7 @@ const createController = async function(
     frameworkData,
     appData: appDataPromise,
   }: {
-    frameworkData: any;
+    frameworkData: FrameworkData;
     appData?: Promise<any>;
     widgetConfig: any;
   },

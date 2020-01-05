@@ -10,7 +10,7 @@ export const createControllers = (
   const wrappedControllers = controllerConfigs.map(controllerConfig => {
     const { appParams, platformAPIs, wixCodeApi } = controllerConfig;
 
-    initializeExperiments();
+    initializeExperiments(controllerConfig);
 
     const appData = initApp({
       controllerConfigs,
@@ -85,8 +85,8 @@ export const createControllers = (
   return wrappedControllers;
 };
 
-const initializeExperiments = () => {
-  frameworkData = fetchFrameworkData();
+const initializeExperiments = (controllerConfig: IWidgetControllerConfig) => {
+  frameworkData = fetchFrameworkData(controllerConfig);
 
   // TODO: Generalize
   frameworkData.experimentsPromise = frameworkData.experimentsPromise.then(

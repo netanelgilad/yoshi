@@ -33,7 +33,8 @@ describe('createControllers', () => {
       { state: {}, setState: () => {} },
       {
         frameworkData: {
-          experimentsPromise: () => Promise.resolve(experiments),
+          translationsPromise: Promise.resolve({}),
+          experimentsPromise: Promise.resolve(experiments),
         },
         widgetConfig,
       },

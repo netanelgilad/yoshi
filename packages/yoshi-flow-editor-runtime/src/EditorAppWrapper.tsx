@@ -19,13 +19,18 @@ const EditorAppWrapper = (
       widgetId: '',
       getAllPublicData: true,
     },
-    // overrides: {
-    //   fedopsAppName: CART_ICON_APP_NAME,
-    //   fedopsLogger,
-    //   locale: window.__LOCALE__,
-    //   siteBaseUrl: `${window.__APP_MODEL__.topology.baseDomain}/`,
-    //   platform: {baseUrls: {cartIconBaseUrl: window.__BASE_STATIC_URL__}},
-    // },
+    overrides: {
+      //   fedopsAppName: CART_ICON_APP_NAME,
+      //   fedopsLogger,
+      //   locale: window.__LOCALE__,
+      //   siteBaseUrl: `${window.__APP_MODEL__.topology.baseDomain}/`,
+      platform: {
+        baseUrls: {
+          staticsBaseUrl: 'https://localhost:3200/',
+          // cartIconBaseUrl: window.__BASE_STATIC_URL__
+        },
+      },
+    },
   });
 
 export default EditorAppWrapper;

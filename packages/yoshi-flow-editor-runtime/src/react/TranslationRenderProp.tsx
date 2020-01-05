@@ -1,18 +1,16 @@
 import React from 'react';
-import PropTypes, { InferProps } from 'prop-types';
-import { translate } from 'react-i18next';
+import { TranslationContext, TranslationFunction } from './TranslationContext';
 
-class TranslateComponent extends React.Component<
-  InferProps<typeof TranslateComponent.propTypes>
-> {
-  static propTypes = {
-    children: PropTypes.func.isRequired,
-  };
-
-  render() {
-    const { children } = this.props;
-    return translate()(children);
-  }
+interface ITranslation {
+  children: (translate: TranslationFunction) => React.ReactNode;
 }
 
-export const Translation = TranslateComponent;
+export class Translation extends React.Component<ITranslation> {
+  render() {
+    return (
+      <TranslationContext.Consumer>
+        {translate => this.props.children(translate as TranslationFunction)}
+      </TranslationContext.Consumer>
+    );
+  }
+}

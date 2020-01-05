@@ -5,8 +5,8 @@ import {
   InjectedExperimentsProps,
 } from '@wix/wix-experiments-react';
 import { ExperimentsBag } from '@wix/wix-experiments';
-
 import { TPAComponentsProvider } from 'wix-ui-tpa/TPAComponentsConfig';
+import { Translation } from 'yoshi-flow-editor-runtime';
 import { Button } from 'wix-ui-tpa/Button';
 import styles from './Widget.st.css';
 
@@ -32,13 +32,17 @@ export const Widget = withExperiments<
   { name: string } & InjectedExperimentsProps
 >(({ name, ...rest }) => {
   return (
-    <div {...styles('root', {}, rest)}>
-      <div className={styles.header}>
-        <h2 data-testid="app-title">
-          {'app.hello'} {name}!
-        </h2>
-      </div>
-      <Button className={styles.mainButton}>click me</Button>
-    </div>
+    <Translation>
+      {t => (
+        <div {...styles('root', {}, rest)}>
+          <div className={styles.header}>
+            <h2 data-testid="app-title">
+              {t('app.hello')} {name}!
+            </h2>
+          </div>
+          <Button className={styles.mainButton}>click me</Button>
+        </div>
+      )}
+    </Translation>
   );
 });
