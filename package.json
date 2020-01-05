@@ -42,7 +42,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "post-merge": "ts-node -T scripts/post-merge"
+      "post-merge": "node scripts/post-merge"
     }
   },
   "lint-staged": {
