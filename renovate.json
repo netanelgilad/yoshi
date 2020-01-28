@@ -1,23 +1,33 @@
 {
-  "extends": [
-    ":separateMajorReleases",
-    ":combinePatchMinorReleases"
-  ],
-  "masterIssue": true,
-  "groupName": "dependencies (weekly)",
-  "labels": [
-    "PR: Chore :construction_worker:"
-  ],
   "enabledManagers": [
     "npm"
   ],
-  "schedule": [
-    "after 3:00am and before 7:00am on sunday"
+  "labels": [
+    "PR: Chore :construction_worker:"
   ],
-  "ignoreDeps": [
-    "mini-css-extract-plugin",
-    "sass-loader",
-    "webpack-dev-server",
-    "typescript"
-  ]
+   "major": {
+    "enabled": false
+  },
+  "separateMinorPatch": false,
+  "minor": {
+    "groupName": "dependencies (weekly)",
+    "schedule": ["after 3:00am and before 7:00am on sunday"],
+    "ignoreDeps": [
+      "mini-css-extract-plugin",
+      "sass-loader",
+      "webpack-dev-server",
+      "typescript"
+    ]
+  },
+  "ignorePaths": [
+    "**/test/**",
+    "**/__tests__/**"
+  ],
+  "masterIssue": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "groupName": "lockfile (weekly)",
+    "schedule": ["after 2:00pm and before 7:00pm on tuesday"]
+  },
+  "npmrc": "registry=http://npm.dev.wixpress.com"
 }
