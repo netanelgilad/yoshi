@@ -27,6 +27,7 @@
   "lockFileMaintenance": {
     "enabled": true,
     "groupName": "lockfile (weekly)",
-    "schedule": ["after 3:00am and before 7:00am on tuesday"]
-  }
+    "schedule": ["after 2:00pm and before 7:00pm on tuesday"]
+  },
+  "npmrc": "registry=http://npm.dev.wixpress.com"
 }
