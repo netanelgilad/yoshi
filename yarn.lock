@@ -5734,10 +5734,10 @@
     tslib "^1.5.0"
     urijs "^1.18.12"
 
-"@wix/ci-build-info@1.0.32":
-  version "1.0.32"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@wix/ci-build-info/-/@wix/ci-build-info-1.0.32.tgz#655fda40db88e98f162c66f07664b37d015d84be"
-  integrity sha1-ZV/aQNuI6Y8WLGbwdmSzfQFdhL4=
+"@wix/ci-build-info@1.0.35":
+  version "1.0.35"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@wix/ci-build-info/-/@wix/ci-build-info-1.0.35.tgz#2a0462ec657bf7626fa71bc45a59039716ad987a"
+  integrity sha1-KgRi7GV792JvpxvEWlkDlxatmHo=
   dependencies:
     "@lerna/project" "^3.21.0"
     "@wix/artifact-description" "http://cdn.dev.wixpress.com/@wix/artifact-description/4ee483271b1188cd31430f549a348b2bd50c908b3b4d034c1c67b13e"
